@@ -10,7 +10,7 @@ int main() {
   while(1){
   std::cout << "$ ";
   std::string s;
-  std::cin>>s;
+  std::getline(std::cin, s);
   if(s.substr(0,5)=="echo"){
     std::cout<< s.substr(5)<<std::endl;
   }
