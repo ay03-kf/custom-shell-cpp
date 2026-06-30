@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-
+#include<bits/stdc++.h>
 int main() {
   // Flush after every std::cout / std:cerr
   std::cout << std::unitbuf;
@@ -8,4 +8,8 @@ int main() {
 
   // TODO: Uncomment the code below to pass the first stage
   std::cout << "$ ";
+  std::string s;
+  std::cin>>s;
+  std::cout<<s<<" "<<"command not found";
+
 }
