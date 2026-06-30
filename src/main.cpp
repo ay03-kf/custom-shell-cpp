@@ -15,6 +15,7 @@ int main() {
     std::cout<< s.substr(5)<<std::endl;
   }
   if(s=="exit") break;
-  // std::cout<<s<<": "<<"command not found\n";}
+  // std::cout<<s<<": "<<"command not found\n";
+}
 
 }
