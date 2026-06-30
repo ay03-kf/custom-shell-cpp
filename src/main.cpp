@@ -11,6 +11,6 @@ int main() {
   std::cout << "$ ";
   std::string s;
   std::cin>>s;
-  std::cout<<s<<": "<<"command not found";}
+  std::cout<<s<<": "<<"command not found\n";}
 
 }
