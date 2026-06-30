@@ -11,6 +11,7 @@ int main() {
   std::cout << "$ ";
   std::string s;
   std::cin>>s;
+  if(s=="exit") break;
   std::cout<<s<<": "<<"command not found\n";}
 
 }
