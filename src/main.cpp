@@ -17,6 +17,7 @@ int main() {
   // }
   // else if(s=="exit") break;
   // else {cout<<s<<": "<<"command not found\n";}
+  cout<<"$ ";
   string s;
   getline(cin,s);
   string cmd=s.substr(5);
@@ -24,7 +25,7 @@ int main() {
     cout<<cmd<<" is a shell bulletin";
   }
   else cout<<cmd<<": not found";
-  cout<<"$ ";
+  
 }
 
 }
