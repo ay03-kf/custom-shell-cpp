@@ -22,9 +22,9 @@ int main() {
   getline(cin,s);
   string cmd=s.substr(5);
   if(cmd=="echo" || cmd=="type" || cmd=="exit"){
-    cout<<cmd<<" is a shell bulletin";
+    cout<<cmd<<" is a shell bulletin\n";
   }
-  else cout<<cmd<<": not found";
+  else cout<<cmd<<": not found\n";
   
 }
 
