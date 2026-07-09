@@ -24,6 +24,7 @@ int main() {
     cout<<cmd<<" is a shell bulletin";
   }
   else cout<<cmd<<": not found";
+  cout<<"$ ";
 }
 
 }
