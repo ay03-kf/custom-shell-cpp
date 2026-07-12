@@ -1,34 +1,13 @@
-[![progress-banner](https://backend.codecrafters.io/progress/shell/72fa1c4a-b84e-4552-a4b3-efbc9f96b992)](https://app.codecrafters.io/users/ay03-kf?r=2qF)
+# Unix Shell (POSIX-Compatible Command Line Interpreter)
 
-This is a starting point for C++ solutions to the
-["Build Your Own Shell" Challenge](https://app.codecrafters.io/courses/shell/overview).
+**Domain:** Operating Systems | Systems Programming | C++ | Linux
 
-In this challenge, you'll build your own POSIX compliant shell that's capable of
-interpreting shell commands, running external programs and builtin commands like
-cd, pwd, echo and more. Along the way, you'll learn about shell command parsing,
-REPLs, builtin commands, and more.
+Built a Unix-like shell in C++ supporting command parsing, built-in commands, and execution of external programs.
 
-**Note**: If you're viewing this repo on GitHub, head over to
-[codecrafters.io](https://codecrafters.io) to try the challenge.
+## 🚀 Key Features & Implementation
+- **Process Management:** Implemented process creation and synchronization using POSIX system calls (`fork`, `exec`, `wait`), along with environment variable expansion.
+- **Environment & Path Resolution:** Developed dynamic directory traversal mechanisms to locate, verify execution permissions, and resolve absolute paths for system binaries using modern C++ filesystem utilities.
+- **Advanced Architecture (In Progress):** Integrating support for input/output redirection, pipelines, and file descriptor management to closely mimic standard Unix shell behavior.
 
-# Passing the first stage
-
-The entry point for your `shell` implementation is in `src/main.cpp`. Study and
-uncomment the relevant code, then run the command below to execute the tests on
-our servers:
-
-```sh
-codecrafters submit
-```
-
-Time to move on to the next stage!
-
-# Stage 2 & beyond
-
-Note: This section is for stages 2 and beyond.
-
-1. Ensure you have `cmake` installed locally
-1. Run `./your_program.sh` to run your program, which is implemented in
-   `src/main.cpp`.
-1. Run `codecrafters submit` to submit your solution to CodeCrafters. Test
-   output will be streamed to your terminal.
+## 🛠️ Development Focus
+Deepened core understanding of the operating system process lifecycle, stream buffer management, inter-process communication, and low-level Linux system programming constraints.
