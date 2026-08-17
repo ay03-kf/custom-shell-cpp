@@ -9,18 +9,22 @@
 #include <direct.h>
 #include <io.h>
 #define chdir _chdir
-#define getcwd _getcwd
+#define getgetcwd _getcwd
 #else
 #include <unistd.h>
 #endif
 
-// Check if a file exists and is not a directory using stat
-static bool file_exists(const std::string& path) {
+// Check if a path exists and is an executable file
+static bool is_executable(const std::string& path) {
+#ifndef _WIN32
+    return access(path.c_str(), X_OK) == 0;
+#else
     struct stat st;
     if (stat(path.c_str(), &st) == 0) {
-        return (st.st_mode & S_IFREG) != 0 || (st.st_mode & S_IFDIR) == 0;
+        return (st.st_mode & S_IFREG) != 0;
     }
     return false;
+#endif
 }
 
 bool is_builtin(const std::string& cmd) {
@@ -29,7 +33,7 @@ bool is_builtin(const std::string& cmd) {
 
 std::string find_in_path(const std::string& cmd) {
     if (cmd.find('/') != std::string::npos || cmd.find('\\') != std::string::npos) {
-        if (file_exists(cmd)) return cmd;
+        if (is_executable(cmd)) return cmd;
         return "";
     }
 
@@ -47,12 +51,12 @@ std::string find_in_path(const std::string& cmd) {
     while (std::getline(ss, dir, delimiter)) {
         if (dir.empty()) continue;
         std::string full_path = dir + "/" + cmd;
-        if (file_exists(full_path)) {
+        if (is_executable(full_path)) {
             return full_path;
         }
 #ifdef _WIN32
         std::string exe_path = dir + "/" + cmd + ".exe";
-        if (file_exists(exe_path)) {
+        if (is_executable(exe_path)) {
             return exe_path;
         }
 #endif
@@ -78,9 +82,15 @@ bool execute_builtin(const Command& cmd) {
         std::cout << "\n";
     } else if (name == "pwd") {
         char cwd[1024];
+#ifndef _WIN32
         if (getcwd(cwd, sizeof(cwd))) {
             std::cout << cwd << "\n";
         }
+#else
+        if (_getcwd(cwd, sizeof(cwd))) {
+            std::cout << cwd << "\n";
+        }
+#endif
     } else if (name == "cd") {
         std::string path;
         if (cmd.args.size() < 2 || cmd.args[1] == "~") {

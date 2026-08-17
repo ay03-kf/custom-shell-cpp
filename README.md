@@ -1,31 +1,40 @@
-# Unix Shell (POSIX-Compatible Command Line Interpreter)
+# Unix Shell
 
-**Domain:** Operating Systems | Systems Programming | C++ | Linux
+A lightweight, POSIX-compatible Unix shell written in standard C++.
 
-A clean, resume-ready Unix-like shell implemented in standard C++ and POSIX system APIs.
+## Features
+- **Interactive REPL:** Prompts `$ ` and executes user commands line by line.
+- **Built-in Commands:** Native support for `exit`, `echo`, `type`, `pwd`, and `cd` (including `cd ~`).
+- **External Command Execution:** Spawns child processes using POSIX process management APIs.
+- **PATH Resolution:** Resolves external executable paths from `$PATH` and checks executable permissions via `access(..., X_OK)`.
+- **Environment Variable Expansion:** Expands `$VAR` (such as `$HOME` and `$PATH`) in unquoted and double-quoted strings.
+- **File Descriptor Redirection:** Redirects standard streams (`<`, `>`, `>>`, `2>`, `2>>`) via POSIX file descriptor calls.
+- **Pipelines:** Inter-process communication for command chains (`|`).
 
-## 🚀 Key Features & Implementation
-- **Interactive REPL Loop:** Prompts `$ ` and reads user input until EOF or `exit`.
-- **Command Parsing & Quoting:** Tokenizer handling single quotes (`'...'`), double quotes (`"..."`), and backslash escapes (`\`).
-- **Environment Variable Expansion:** Expands `$VAR` (such as `$HOME`, `$PATH`) in unquoted and double-quoted contexts.
-- **Built-in Commands:** Native implementations of `exit`, `echo`, `type`, `pwd`, and `cd` (including `cd ~`).
-- **PATH Resolution:** Searches `$PATH` directories to resolve executable binary paths.
-- **Process Management:** Spawns and synchronizes child processes using POSIX system calls (`fork()`, `execvp()`, `waitpid()`).
-- **I/O & Error Redirection:** File descriptor redirection for `<`, `>`, `>>`, `2>`, `2>>` using `open()`, `dup2()`, and `close()`.
-- **Multi-stage Pipelines:** Inter-process communication pipelines (`|`) using `pipe()`, `fork()`, `dup2()`, and `waitpid()`.
+## Architecture
+```
+main (REPL Loop) ---> parser (Tokenization & Pipeline Parsing) ---> executor / builtins
+```
 
-## 🏗️ Architecture
-- `src/main.cpp`: REPL entry point and main event loop.
-- `src/parser.hpp` / `src/parser.cpp`: Data structures (`Command`, `Pipeline`), tokenization, quoting, variable expansion, and AST parsing.
-- `src/builtins.hpp` / `src/builtins.cpp`: Builtin command implementations and `$PATH` executable lookup.
-- `src/executor.hpp` / `src/executor.cpp`: Process creation, file descriptor manipulation, and pipeline execution engine.
+### Key POSIX APIs Used
+- `fork()`: Process creation
+- `execvp()`: Executable image replacement
+- `waitpid()`: Synchronous process waiting
+- `pipe()`: Inter-process pipe creation
+- `dup2()`: File descriptor duplication / stream redirection
+- `open()` & `close()`: File descriptor management
 
-## 🛠️ Build & Run
+*Note: Linux/WSL/POSIX is the primary target runtime environment. Windows compatibility logic is included as a local development fallback.*
+
+## Build & Run
 ```bash
 # Build using CMake
 cmake -B build -S .
 cmake --build ./build
 
-# Run executable
+# Run shell
 ./build/shell
 ```
+
+## Limitations
+Advanced shell features such as job control, background jobs (`&`), process groups, command substitution (`$(...)` / `` `...` ``), conditional operators (`&&`, `||`), subshells, globbing, and autocompletion are intentionally not implemented to keep the codebase simple and understandable.
