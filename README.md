@@ -2,12 +2,30 @@
 
 **Domain:** Operating Systems | Systems Programming | C++ | Linux
 
-Built a Unix-like shell in C++ supporting command parsing, built-in commands, and execution of external programs.
+A clean, resume-ready Unix-like shell implemented in standard C++ and POSIX system APIs.
 
 ## 🚀 Key Features & Implementation
-- **Process Management:** Implemented process creation and synchronization using POSIX system calls (`fork`, `exec`, `wait`), along with environment variable expansion.
-- **Environment & Path Resolution:** Developed dynamic directory traversal mechanisms to locate, verify execution permissions, and resolve absolute paths for system binaries using modern C++ filesystem utilities.
-- **Advanced Architecture (In Progress):** Integrating support for input/output redirection, pipelines, and file descriptor management to closely mimic standard Unix shell behavior.
+- **Interactive REPL Loop:** Prompts `$ ` and reads user input until EOF or `exit`.
+- **Command Parsing & Quoting:** Tokenizer handling single quotes (`'...'`), double quotes (`"..."`), and backslash escapes (`\`).
+- **Environment Variable Expansion:** Expands `$VAR` (such as `$HOME`, `$PATH`) in unquoted and double-quoted contexts.
+- **Built-in Commands:** Native implementations of `exit`, `echo`, `type`, `pwd`, and `cd` (including `cd ~`).
+- **PATH Resolution:** Searches `$PATH` directories to resolve executable binary paths.
+- **Process Management:** Spawns and synchronizes child processes using POSIX system calls (`fork()`, `execvp()`, `waitpid()`).
+- **I/O & Error Redirection:** File descriptor redirection for `<`, `>`, `>>`, `2>`, `2>>` using `open()`, `dup2()`, and `close()`.
+- **Multi-stage Pipelines:** Inter-process communication pipelines (`|`) using `pipe()`, `fork()`, `dup2()`, and `waitpid()`.
 
-## 🛠️ Development Focus
-Deepened core understanding of the operating system process lifecycle, stream buffer management, inter-process communication, and low-level Linux system programming constraints.
+## 🏗️ Architecture
+- `src/main.cpp`: REPL entry point and main event loop.
+- `src/parser.hpp` / `src/parser.cpp`: Data structures (`Command`, `Pipeline`), tokenization, quoting, variable expansion, and AST parsing.
+- `src/builtins.hpp` / `src/builtins.cpp`: Builtin command implementations and `$PATH` executable lookup.
+- `src/executor.hpp` / `src/executor.cpp`: Process creation, file descriptor manipulation, and pipeline execution engine.
+
+## 🛠️ Build & Run
+```bash
+# Build using CMake
+cmake -B build -S .
+cmake --build ./build
+
+# Run executable
+./build/shell
+```
